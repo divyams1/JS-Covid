@@ -1,76 +1,89 @@
-
+ 
 var d3 = require("d3")
-import { select } from 'd3-selection'
-import { geomap } from 'd3-geomap'
-var d3_composite = require("d3-composite-projections");
-var d3_geo = require("d3-geo");
-var d3_request = require("d3-request");
-var d3_selection = require("d3-selection");
-var d3_transition = require("d3-transition");
-var topojson = require("topojson");
-import axios from 'axios'
+import { chart} from './chart';
 
 
 
 const map = () => {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
+    
+    
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(abbr, pop) {
+     
         if (this.readyState == 4 && this.status == 200) {
-        
+           
+           
              const stateInfo = Object.values( JSON.parse(this.response) ) 
               let data = stateInfo.map( state  => {
-                            return [  state["state"] ,  state["total"] ]
-                            // return { state: state["state"] , total: state["total"] }
+                            return [  state["state"] ,  state["total"], (state["deathConfirmed"]/state["positive"]) ]      
                         })
+             let colorData = stateInfo.map( state  => {
+                  return  (state["death"]/state["positive"])          
+            })
+           
               data.splice(3,1)
               data.splice(11,1)
               data.splice(25,1)
               data.splice(47,1)
               data.splice(39,1)
-              data.splice(7,1)
+        
+               colorData.splice(3,1)
+             colorData.splice(11,1)
+               colorData.splice(25,1)
+               colorData.splice(47,1)
+              colorData.splice(39,1)
+              
+            
+             const myColor = d3.scaleLinear()
+                         .range(["#F08080", "#8B0000"])
+                        .domain([Math.min(...colorData), Math.max(...colorData)])
+
+             const legend = d3.select('body')
+                            .append('div')
+                            .attr('id', "legend")
+            
              
               const map = d3.select("#map")
+              
 
-              d3.selectAll('.state-path')
-                        .on('mouseover', function(){
-                            d3.select(this)
-                                .style('fill', 'red')
-                            d3.select("#" +this.id + "div")
-                                .attr('class', 'hover-div')
-                           
-                        })
-                        .on('mouseout', function(){
-                            d3.select(this)
-                                .style('fill', 'black')
-                        })
+              const tooltip = d3.select('body')
+                        .append('div')
+                        .style('position' ,'absolute')
+                        .style('z-index', 10)
+                        .style('visibility', 'hidden')
+                        .style('background', '#000')
+                        .text('a simple tool tip')
+                        .style('color', 'white')
+            d3.select('body')
+                    .selectAll('.state-path')
+                    .append('div')
+
+
+
             data.map( state => {
                 const stateId = state[0]
-                d3.select(`#${stateId}title`)
-                    .text( `Total Cases: ${state[1]}` )
-                    .attr('id', `${stateId}div`)
+                d3.select(`#${stateId}`)
+                    .on('mouseover', (d) =>  { tooltip.text( `${state[0]}:  ${state[1]} cases` )
+                         tooltip.style('visibility', 'visible')})
+                    .on('mousemove', (e) => { 
+                        return tooltip.style('top', (e.pageY  -10)+'px').style('left', (e.pageX+10)+'px')})
+                    .on('mouseout', () => {return tooltip.style('visibility', 'hidden') })
+                    .on('click' , (e) => {
+                        const stateName= e.currentTarget.id 
+                        chart(stateName)
+                        
+                    })
+                    .style('fill', function(d) { return myColor(state[2])})
             })
+            d3.selectAll('title')
+                .text('')
+           
     }
 }
-   xhttp.open("GET", 'https://api.covidtracking.com/v1/states/current.json', true);
+   xhttp.open("GET", ' https://api.covidtracking.com/v1/states/current.json', true);
    xhttp.send();
     
 
 }
 export default map;
 
-
-
-
-
- // let csvState = data.map( function(state) {
-            //     return state.join();
-            // }).join('\n');
-
-        //  var state = d3.selectAll('path').attr('fill', function(d){  
-                // Get the ID of the path we are currently working with 	
-                // Our SVG uses the state abbreviation for the ID 	var abbr = this.id;  
-                    // Loop through the state data looking for 	// a match for that abbreviation 
-                        // Then returning the corresponding president 
-                            // who won that state, from the array we made earlier
-                             	// $.each(state_data, function(key, data){ 		if(data.state_abbr == abbr){ 			state_president = data.president; 		} 	})  	// Return colors 	// based on data					 	if(state_president == "Obama"){ 		return "blue" 	} 	else if(state_presid
-                

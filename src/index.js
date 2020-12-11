@@ -6,7 +6,7 @@ import 'core-js';
 
 document.addEventListener('DOMContentLoaded', () => {
             map();
-            test();
+            // test();
            
 })
     	
