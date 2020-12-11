@@ -18,6 +18,7 @@
     "d3-request": "^1.0.6",
     "d3-selection": "^2.0.0",
     "d3-transition": "^2.0.0",
+    "moment": "^2.29.1",
     "nvm": "^0.0.4",
     "regenerator-runtime": "^0.13.7",
     "topojson": "^3.0.2",

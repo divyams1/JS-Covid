@@ -1,3 +1,7 @@
+import { dropdown } from './dropdown.js';
+
+
+
 export const chart = (stateName) => {
               var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function () {
@@ -12,6 +16,9 @@ export const chart = (stateName) => {
                         })
                         const updateChart = (selectedGroup) => {
                            {
+                                const margin = ({ top: 10, right: 0, left: 20, bottom:15})
+                                const height =300  
+                                const width = 300
                                 const stateNumbers = data.map( state => { return state['state']})
                                 const stateNumber = stateNumbers.indexOf(selectedGroup)
                                 const singleStateInfo = Object.values( JSON.parse(xhttp.response) ) 
@@ -19,7 +26,7 @@ export const chart = (stateName) => {
                                 const dataToDisplay = [ [ 'inIcuCurrently', stateData['inIcuCurrently']  ] , [ 'death', stateData['death'] ] , [ 'hospitalizedCurrently' , stateData['hospitalizedCurrently'] ]]
                                 d3.select('#supplement-chart')
                                     .remove();
-                                let svg = d3.select('body')
+                                let svg = d3.select('#state-holder')
                                     .append('svg')
                                     .attr("viewBox", [0,0, width, height])
                                     .attr('height', height)
@@ -32,26 +39,10 @@ export const chart = (stateName) => {
                                 const x2 = d3.scaleBand()
                                     .domain(dataToDisplay.map( d => d[0] ) )
                                     .rangeRound([margin.left, width- margin.right])
-                                    .padding(0.1)
+                                    .padding(0.2)
                                 svg.append('g')
                                     .attr('transform', `translate(0,${height-margin.bottom})`)
                                     .call(d3.axisBottom(x2))
-                                
-                                svg.append('g')
-                                    .attr("transform", `translate(${margin.left}, 0)`)
-                                    .call(d3.axisLeft(y2))
-
-                                const yTitle2 = g => g.append("text")
-                                    .attr("font-family", "sans-serif")
-                                    .attr("font-size", 10)
-                                    .attr("y", 10)
-                                    .text("↑ Frequency")
-
-                                const yAxis2 = g => g 
-                                    .attr('transform', `translate(${margin.left}, 0)`)
-                                    .call(d3.axisLeft(y2).ticks(null, null))
-                                    .call(g => g.select(".domain").remove())
-
                                 const xAxis2 = g => g
                                     .attr('transform', `translate( 0, ${height- margin.bottom})`)
                                     .call(d3.axisBottom(x2).tickSizeOuter(0))
@@ -65,18 +56,26 @@ export const chart = (stateName) => {
                                     .attr('height', d => y2(0) - y2(d[1]))
                                     .attr('width', x2.bandwidth())
                                     .append('text')
-                                    .text(d => d[1])
-
+                                        .attr('x', -(height / 2) - margin.bottom)
+                                        .attr('y', margin.bottom / 2.4)
+                                        .style('fill', 'black')
+                                        .style('text-anchor', 'middle')
+                                        .attr('transform', 'rotate(-90)')
+                                        .text(d => d[1])
+                                
+                                    
+                                      
+                                    
                                 svg.append('g')
                                     .call(xAxis2)
                                 
-                                svg.append('g')
-                                    .call(yAxis2)
+                                // svg.append('g')
+                                //     .call(yAxis2)
                                 
-                                svg.call(yTitle2)
-
+                                // svg.call(yTitle2)
 
                                 
+                                dropdown();
                             }
                         }
 
