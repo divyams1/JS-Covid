@@ -13,5 +13,27 @@ title {
 }
 
 body {
-    display: flex
+    display: flex;
+    flex-direction: column;
+
+}
+
+#title-div {
+    color: white; 
+    background-color: red;
+    padding: 10px;
+    width: 100%;
+}
+
+#orientation {
+    display: flex;
+    
+}
+
+#map-container {
+    border-right: 2px solid black;
+}
+
+#state-holder {
+    margin-left: 50px;
 }
