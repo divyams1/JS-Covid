@@ -39,9 +39,7 @@ const map = () => {
                          .range(["#F08080", "#8B0000"])
                         .domain([Math.min(...colorData), Math.max(...colorData)])
 
-             const legend = d3.select('body')
-                            .append('div')
-                            .attr('id', "legend")
+          
             
              
               const map = d3.select("#map")
@@ -80,14 +78,24 @@ const map = () => {
             })
             d3.selectAll('title')
                 .text('')
-     
-            // const xScale = d3.scaleBand()
-            //     .domain([0,1])
-            //     .range([0,width]);
-
-            // const yScale = d3.scaleLinear()
-            //     .domain(domain)
-            //     .range(height, 0)
+            colorData = colorData.sort()
+            const range = colorData[50] - colorData[0]
+            const colorTicks = [ range*0, range*(1/6), range*(2/6), range*(3/6), range*(4/6), range*(5/6), range*(6/6)]
+            const colors = ['#F08080', '#CD5C5C','#DC143C', '#B22222', '#FF0000', '#8B0000'];
+            
+            const legend = d3.select('svg')
+                .append('div')
+                .attr('id', 'legend')
+            
+            colors.map( color => {
+                d3.select('#legend')
+                    .append('rect')
+                    .style('width', 50)
+                    .style('height', 25)
+                    .style('fill', color)
+            })
+          
+            
            
           
 
@@ -106,64 +114,3 @@ export default map;
 
 
 
-
-
-    //    const legendHeight = 500
-    //         const legendWidth = 500
-    //         const x1 = 200 
-    //         const barWidth = 300
-    //         const y1 = 150
-    //         const barHeight = 100
-    //         const numberHues = 35 
-
-    //         const idGradient = "legendGradient"
-    //        const svgForLegend = d3.select('#theBar').append("svg")
-    //         .attr('width', legendWidth)
-    //         .attr('height', legendHeight)
-
-    //         svgForLegend.append('g')
-    //             .append('defs')
-    //             .append('linearGradient')
-    //                 .attr('id', idGradient)
-    //                 .attr('x1', '0%')
-    //                 .attr('x2', '100%')
-    //                 .attr('y1', '0%')
-    //                 .attr('y2', '0%')
-
-    //     svgForLegend.append('rect')
-    //         .attr('fill', `url(#${idGradient})`)
-    //         .attr('x', x1)
-    //         .attr('y', y1)
-    //         .attr('width', legendWidth)
-    //         .attr('height', legendHeight)
-    //         .attr('rx', 20)
-    //         .attr('ry', 20)
-    //     const textY = y1 + barHeight/2 + 15;
-    //     svgForLegend.append('text')
-    //         .attr('class', 'legendText')
-    //         .attr('text-anchor', 'middle')
-    //         .attr('x', x1-25)
-    //         .attr('y', textY)
-    //         .attr('dy', 0)
-    //         .text(0)
-
-    // svgForLegend.append('text')
-    //         .attr("class","legendText")
-    //         .attr("text-anchor", "left")
-    //         .attr("x",x1 + barWidth + 15)
-    //         .attr("y",textY)
-    //         .attr("dy",0)
-    //         .text(numberHues + "+");
-        
-    // const hueStart = 160
-    // const hueEnd = 0
-
-    // const opacityStart = 0.3 
-    // const opacityEnd = 1.0
-
-    // const theHue, rgbString, opacity, p; 
-
-    // const deltaPercent = 1/(numberHues-1)
-
-    // const deltaHue = ( hueEnd - hueStart)/(numberHues-1)
-    // const deltaOpacity = (opacityEnd - opacityStart)/(numberHues-1)

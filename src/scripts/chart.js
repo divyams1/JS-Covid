@@ -86,8 +86,7 @@ export const chart = (stateName) => {
                                     .call(yAxis2)
                                 
                                 // svg.call(yTitle2)
-
-                                 
+                               
                                 
                             }
                         }
