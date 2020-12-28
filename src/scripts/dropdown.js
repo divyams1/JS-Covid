@@ -1,11 +1,12 @@
 import {chart} from './chart';
 import moment from 'moment'
+import { timeFormatLocale } from 'd3';
 
 export const dropdownHeatMap = (data) => {
     d3.select("#dropdown-1")
         .append('select')
-        .text('mortality')
-        .attr('value', 'mortality')
+        .text('positive')
+        .attr('value', 'positive')
         .attr('id', 'select-heat')
 
     
@@ -18,7 +19,8 @@ export const dropdownHeatMap = (data) => {
 
      const heatKeys = [];
      const allKeys = Object.keys(states[0])
-     heatKeys.push( 'mortality')
+     
+     heatKeys.push(allKeys[2])
      heatKeys.push( allKeys[4])
      heatKeys.push( allKeys[8])
      heatKeys.push( allKeys[9])
@@ -32,24 +34,7 @@ export const dropdownHeatMap = (data) => {
                             .text( (d) => { return d } )
                             .attr("value", (d) => { return d})
     d3.select("#select-heat").on("change", d => {
-                            
-                            if ( d.target.value === "mortality") {
-                                const mortData = states.map( state => {
-                                    return [ state["state"], (state["death"]/state["positive"])]
-                                })
-                               
-                                const mortColor = mortData.map( state => {
-                                    return state[1]
-                                })
-
-                                const mortColorScale = d3.scaleLinear()
-                                         .range(["#F08080", "#8B0000"])
-                                        .domain([Math.min(...mortColor), Math.max(...mortColor)])
-                                mortData.map( state => {
-                                    d3.select(`#${state[0]}`)
-                                        .style('fill', d => {return mortColorScale(state[1]) } )
-                                })
-                            } else {
+                            const metric = d.target.value;
                             const newData = states.map( state => {
                                 
                                 return ( [state["state"], state[d.target.value] ])
@@ -57,18 +42,39 @@ export const dropdownHeatMap = (data) => {
                            const colorData = newData.map( state => {
                                return state[1]
                            })
-                          
+                            d3.select('#tooltip-map').remove();
+                             const tooltip = d3.select('body')
+                                .append('div')
+                                .style('position' ,'absolute')
+                                .style('z-index', 10)
+                                .style('visibility', 'hidden')
+                                .style('background', '#228B22')
+                                .text('a simple tool tip')
+                                .style('color', 'white')
+                                .style('height', '30px')
+                                .style('border', '1px solid black')
+                                .attr('id', 'tooltip-map')
                             const newColor = d3.scaleLinear()
                                     .range(["#F08080", "#8B0000"])
                                     .domain([0, Math.max(...colorData)])
                             
                             newData.map ( state => {
+                                
                                 const stateId = state[0]
                                 d3.select(`#${stateId}`)
+                                      .on('mouseover', (d) =>  { tooltip.text( `${state[0]}:  ${state[1]} ${metric}` )
+                                        tooltip.style('visibility', 'visible')})
+                                    .on('mousemove', (e) => { 
+                                        return tooltip.style('top', (e.pageY  -10)+'px').style('left', (e.pageX+10)+'px')})
+                                    .on('mouseout', () => {return tooltip.style('visibility', 'hidden') })
+                                    .on('click' , (e) => {
+                                        const stateName= e.currentTarget.id 
+                                        chart(stateName)
+                                        timeDropdown(stateName)
+                    })
                                     .style('fill', function(d) { return newColor(state[1])})
                             })
 
-                        }
                         })
                     
 }
