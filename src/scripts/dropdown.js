@@ -70,7 +70,7 @@ export const dropdownHeatMap = (data) => {
                                     .on('click' , (e) => {
                                         const stateName= e.currentTarget.id 
                                         chart(stateName)
-                                        timeDropdown(stateName)
+                                        // timeDropdown(stateName)
                     })
                                     .style('fill', function(d) { return newColor(state[1])})
                             })
@@ -102,6 +102,24 @@ export const stateDropdown = (data) => {
                         })
 }
 
+export const dataDropdown = (data, stateName) => {
+    d3.select('#data')
+        .remove()
+    d3.select('#data-dropdown-div')
+             .append('h1')
+             .text(stateName )
+             .attr('id', 'data')
+    d3.select('#data-dropdown-div')
+        .append('p')
+        .text('View Data by Category:')
+        .attr('id', 'dropdown-3')
+    d3.select("#dropdown-3")
+        .append('select')
+        .text('today')
+        .attr('value', 'today')
+        .attr('id', 'select-date')
+
+}
 export const timeDropdown = (state) => {
    const abbr = {
     "AL": "Alabama",

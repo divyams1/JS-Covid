@@ -1,6 +1,6 @@
  
 var d3 = require("d3")
-import { chart} from './chart';
+import { chart} from './chart.js';
 import { stateDropdown, dropdownHeatMap, timeDropdown } from './dropdown'
 
 
