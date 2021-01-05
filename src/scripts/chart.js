@@ -747,6 +747,7 @@ d3.select('#state-dropdown')
   .append('option')
   .text( d => {return d })
   .attr('value' , d => {return d})
+  .style('margin')
 d3.select('#state-dropdown')
   .on('change', d=> {
     const metric = d.target.value; 
