@@ -762,9 +762,10 @@ d3.select('#state-dropdown')
     .data(stateObj)
     .enter()
     .append('th')
-    .text( d => { 
-        
-        return d[0]})
+    .text( d => { return d[0]})
+    .style('border', '1px solid black')
+    .style('margin', '0')
+    .style('padding', '0')
  const row = table.append('tbody');
  row 
     .selectAll('tr')
@@ -776,6 +777,7 @@ const cells = row.selectAll('td')
         .enter()
         .append('td')
         .text( d => { return d[1]})
+        .style('border', '1px solid black')
 
 
  dataDropdown(stateObj, stateName)
