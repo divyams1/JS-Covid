@@ -5,7 +5,7 @@ import { timeFormatLocale } from 'd3';
 export const dropdownHeatMap = (data) => {
     d3.select("#dropdown-1")
         .append('select')
-        .text('positive')
+        .text('Positive')
         .attr('value', 'positive')
         .attr('id', 'select-heat')
 
@@ -17,22 +17,18 @@ export const dropdownHeatMap = (data) => {
      states.splice(47,1)
      states.splice(39,1)
 
-     const heatKeys = [];
+     let heatKeys = [];
      const allKeys = Object.keys(states[0])
      
-     heatKeys.push(allKeys[2])
-     heatKeys.push( allKeys[4])
-     heatKeys.push( allKeys[8])
-     heatKeys.push( allKeys[9])
-     heatKeys.push( allKeys[19])
+     heatKeys = [ ['positive', 'Positive'], ['negative', 'Negative'], ['hospitalizedCurrently' , 'Hospitalized Currently'] , ['hospitalizedCumulative', 'Cumulative Hospitalizations'] , ['death' , 'Deaths'] ]
 
     d3.select("#select-heat")
                             .selectAll('myOptions')
                             .data(heatKeys)
                             .enter()
                             .append('option')
-                            .text( (d) => { return d } )
-                            .attr("value", (d) => { return d})
+                            .text( (d) => { return d[1] } )
+                            .attr("value", (d) => { return d[0]})
     d3.select("#select-heat").on("change", d => {
                             const metric = d.target.value;
                             const newData = states.map( state => {
@@ -51,19 +47,21 @@ export const dropdownHeatMap = (data) => {
                                 .style('background', '#228B22')
                                 .text('a simple tool tip')
                                 .style('color', 'white')
-                                .style('height', '30px')
+                                .style('height', '50px')
                                 .style('border', '1px solid black')
                                 .attr('id', 'tooltip-map')
+                                .style('width', '400px')
                             const newColor = d3.scaleLinear()
                                     .range(["#F08080", "#8B0000"])
                                     .domain([0, Math.max(...colorData)])
+                           
                             
                             newData.map ( state => {
                                 
                                 const stateId = state[0]
                                 d3.select(`#${stateId}`)
                                       .on('mouseover', (d) =>  { tooltip.text( `${state[0]}:  ${state[1]} ${metric}` )
-                                        tooltip.style('visibility', 'visible')})
+                                        tooltip.style('visibility', 'visible')}).style('text-align', 'center')
                                     .on('mousemove', (e) => { 
                                         return tooltip.style('top', (e.pageY  -10)+'px').style('left', (e.pageX+10)+'px')})
                                     .on('mouseout', () => {return tooltip.style('visibility', 'hidden') })
@@ -86,6 +84,10 @@ export const stateDropdown = (data) => {
                             .text("All")
                             .attr("value", "All")
                             .attr('id', 'select-state')
+                        d3.select('#select-state')
+                            .append('option')
+                            .text( 'None')
+                            .attr('value', 'none')
 
                         d3.select("#select-state")
                             .selectAll('myOptions')

@@ -666,10 +666,17 @@ export const chart = (stateName) => {
      const x = d3.scaleBand()
         .domain(stateData.map( d=> d[0]))
         .rangeRound([margin.left, width-margin.right])
-
+        .padding(0.2)
      d3.select('#supplement-chart')
          .remove();
-    let svg = d3.select('#state-holder')
+
+     let cont = d3.select('#state-holder')
+        .append('div')
+        .attr('display' , "flex")
+        .attr('justify-content', 'center')
+        .attr('id', 'chart-container')
+    
+    let svg = d3.select('#chart-container')
        .append('svg')
        .attr("viewBox", [0,0, width, height])
        .attr('height', height)
@@ -704,7 +711,8 @@ export const chart = (stateName) => {
       .attr("x", d =>  x(d[0]))
       .attr("y", d => y(d[1]))
       .attr("height", d =>    y(0) - y( d[1]))
-      .attr("width", x.bandwidth());
+      .attr("width", x.bandwidth())
+      
 
    svg.append("g")
       .call(xAxis);
@@ -747,7 +755,7 @@ d3.select('#state-dropdown')
   .append('option')
   .text( d => {return d })
   .attr('value' , d => {return d})
-  .style('margin')
+  .style('margin-left')
 d3.select('#state-dropdown')
   .on('change', d=> {
     const metric = d.target.value; 
