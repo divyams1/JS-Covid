@@ -40,9 +40,61 @@ const map = () => {
              const myColor = d3.scaleLinear()
                          .range(["#F08080", "#8B0000"])
                         .domain([Math.min(...colorData), Math.max(...colorData)])
+             d3.select('#legend-cont')
+                .append('h2')
+                .text(`Positives`)
+                .style('margin', '0')
+                .attr('id', 'legend-label')
 
-          
+            d3.select('#legend')
+                .append('p')
+                .text(`${Math.min(...colorData)}`)
+                .attr('id', 'left-number')
+
+   
+
+              d3.select('#legend')
+            .append('rect')
+            .style('width', '20px')
+            .style('height', '20px')
+            .style('background-color', '#F08080')
+
+             d3.select('#legend')
+            .append('rect')
+            .style('width', '20px')
+            .style('height', '20px')
+            .style('background-color', '#CD5C5C')
+
+            d3.select('#legend')
+            .append('rect')
+            .style('width', '20px')
+            .style('height', '20px')
+            .style('background-color', '#DC143C')
+
+            d3.select('#legend')
+            .append('rect')
+            .style('width', '20px')
+            .style('height', '20px')
+            .style('background-color', '#B22222')
+
+             d3.select('#legend')
+            .append('rect')
+            .style('width', '20px')
+            .style('height', '20px')
+            .style('background-color', '#FF0000')
+
+
+               d3.select('#legend')
+            .append('rect')
+            .style('width', '20px')
+            .style('height', '20px')
+            .style('background-color', '#8B0000')
+
             
+            d3.select('#legend')
+                .append('p')
+                .text(`${Math.max(...colorData)}`)
+                .attr('id', 'right-number')
              
               const map = d3.select("#map")
               
@@ -82,7 +134,10 @@ const map = () => {
             d3.selectAll('title')
                 .text('')
            
-          
+         
+
+            
+
             
            
           

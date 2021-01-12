@@ -73,6 +73,60 @@ export const dropdownHeatMap = (data) => {
                                     .style('fill', function(d) { return newColor(state[1])})
                             })
 
+            const labels = { 'positive': 'Positive', 'negative': 'Negative', 'hospitalizedCurrently' : 'Hospitalized Currently' , 'hospitalizedCumulative': 'Cumulative Hospitalizations' , 'death' : 'Deaths'} 
+            const legendLabel = labels[d.target.value]; 
+            d3.select('#legend-label')
+                        .text(`${legendLabel}`)
+
+            d3.select('#legend')
+                    .append('div')
+                    .attr('id', 'heat-legend')
+            d3.select('#left-number')
+                .text(`${Math.min(...colorData)}`)
+
+
+              d3.select('#heat-legend')
+            .append('rect')
+            .style('width', '20px')
+            .style('height', '20px')
+            .style('background-color', '#F08080')
+
+             d3.select('#heat-legend')
+            .append('rect')
+            .style('width', '20px')
+            .style('height', '20px')
+            .style('background-color', '#CD5C5C')
+
+            d3.select('#heat-legend')
+            .append('rect')
+            .style('width', '20px')
+            .style('height', '20px')
+            .style('background-color', '#DC143C')
+
+            d3.select('#heat-legend')
+            .append('rect')
+            .style('width', '20px')
+            .style('height', '20px')
+            .style('background-color', '#B22222')
+
+             d3.select('#heat-legend')
+            .append('rect')
+            .style('width', '20px')
+            .style('height', '20px')
+            .style('background-color', '#FF0000')
+
+
+               d3.select('#heat-legend')
+            .append('rect')
+            .style('width', '20px')
+            .style('height', '20px')
+            .style('background-color', '#8B0000')
+
+            
+            d3.select('#right-number')
+                .text(`${Math.max(...colorData)}`)
+
+
                         })
                     
 }

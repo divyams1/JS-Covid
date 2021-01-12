@@ -96,3 +96,12 @@ img {
     align-items: baseline;
 }
 
+#legend {
+    display: flex; 
+    align-items: baseline;
+}
+
+#legend-cont {
+    border: 1px solid black;
+    padding: 10px;
+}
