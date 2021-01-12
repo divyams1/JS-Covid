@@ -660,6 +660,7 @@ export const chart = (stateName) => {
       const width = 500;
       const xRange = [ margin.left, width - margin.right];
       const yRange = [height- margin.bottom, margin.top];
+      
       const y = d3.scaleLinear()
         .domain( [0, d3.max(stateData , d => d[1])])
         .range( [height-margin.bottom, margin.top])
@@ -696,7 +697,7 @@ export const chart = (stateName) => {
 
     const yAxis = g => g  
        .attr("transform", `translate(${margin.left},0)`)
-       .call(d3.axisLeft(y).ticks(null, "%"))
+       .call(d3.axisLeft(y).ticks(10, '3f'))
        .call(g => g.select(".domain").remove())
        
 
