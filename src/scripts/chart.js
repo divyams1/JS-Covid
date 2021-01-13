@@ -668,6 +668,8 @@ export const chart = (stateName) => {
         .domain(stateData.map( d=> d[0]))
         .rangeRound([margin.left, width-margin.right])
         .padding(0.2)
+    d3.select('#data-table').remove();
+    d3.select('#risk-data-table').remove();
      d3.select('#supplement-chart')
          .remove();
 
@@ -748,6 +750,9 @@ d3.select('#state-dropdown').remove();
         .remove();
     d3.select('#dropdown-cont2')
         .remove();
+
+    d3.select('#data-table').remove()
+    d3.select('#risk-data-table').remove()
     d3.select('#data-dropdown-div')
              .append('h1')
              .text(stateName )
@@ -783,13 +788,14 @@ d3.select('#state-dropdown')
     const metric = d.target.value; 
     makeChart( metric, stateObj )
   })
-
-
-  const table = d3.select('#state-holder').append('table').attr('id', 'data-table')
+  
+  const raceData = stateObj.slice(0,3)
+  const riskData = stateObj.slice(4,6)
+  const table = d3.select('#state-holder').append('table').attr('id', 'data-table').style('margin-bottom', '50px')
   const header = table.append('thead').append('tr');
   header    
     .selectAll('th')
-    .data(stateObj)
+    .data(raceData)
     .enter()
     .append('th')
     .text( d => { return d[0]})
@@ -802,11 +808,38 @@ d3.select('#state-dropdown')
  const row = table.append('tbody');
  row 
     .selectAll('tr')
-    .data(stateObj)
+    .data(raceData)
     .enter()
     .append('tr')
 const cells = row.selectAll('td')
-        .data(stateObj)
+        .data(raceData)
+        .enter()
+        .append('td')
+        .text( d => { return d[1]})
+        .style('border', '1px solid black')
+
+ const riskTable = d3.select('#state-holder').append('table').attr('id', 'risk-data-table')
+  const riskHeader = riskTable.append('thead').append('tr');
+  riskHeader    
+    .selectAll('th')
+    .data(riskData)
+    .enter()
+    .append('th')
+    .text( d => { return d[0]})
+    .style('background-color', '#FF7E6B')
+    .style('margin', '0')
+    .style('padding', '0')
+    .style('color', 'D6D6D6')
+    .style('padding-left', '5px')
+    .style('padding-right', '5px')
+ const riskRow = riskTable.append('tbody');
+ riskRow 
+    .selectAll('tr')
+    .data(riskData)
+    .enter()
+    .append('tr')
+const riskCells = riskRow.selectAll('td')
+        .data(riskData)
         .enter()
         .append('td')
         .text( d => { return d[1]})
