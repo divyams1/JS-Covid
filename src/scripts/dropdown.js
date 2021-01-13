@@ -95,25 +95,25 @@ export const dropdownHeatMap = (data) => {
             .append('rect')
             .style('width', '20px')
             .style('height', '20px')
-            .style('background-color', '#CD5C5C')
+            .style('background-color', '#db6868')
 
             d3.select('#heat-legend')
             .append('rect')
             .style('width', '20px')
             .style('height', '20px')
-            .style('background-color', '#DC143C')
+            .style('background-color', '#c95151')
 
             d3.select('#heat-legend')
             .append('rect')
             .style('width', '20px')
             .style('height', '20px')
-            .style('background-color', '#B22222')
+            .style('background-color', '#b43636')
 
              d3.select('#heat-legend')
             .append('rect')
             .style('width', '20px')
             .style('height', '20px')
-            .style('background-color', '#FF0000')
+            .style('background-color', '#a52222')
 
 
                d3.select('#heat-legend')

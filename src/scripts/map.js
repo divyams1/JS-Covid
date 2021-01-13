@@ -63,25 +63,25 @@ const map = () => {
             .append('rect')
             .style('width', '20px')
             .style('height', '20px')
-            .style('background-color', '#CD5C5C')
+            .style('background-color', '#db6868')
 
             d3.select('#legend')
             .append('rect')
             .style('width', '20px')
             .style('height', '20px')
-            .style('background-color', '#DC143C')
+            .style('background-color', '#c95151')
 
             d3.select('#legend')
             .append('rect')
             .style('width', '20px')
             .style('height', '20px')
-            .style('background-color', '#B22222')
+            .style('background-color', '#b43636')
 
              d3.select('#legend')
             .append('rect')
             .style('width', '20px')
             .style('height', '20px')
-            .style('background-color', '#FF0000')
+            .style('background-color', '#a52222')
 
 
                d3.select('#legend')
@@ -104,7 +104,7 @@ const map = () => {
                         .style('position' ,'absolute')
                         .style('z-index', 10)
                         .style('visibility', 'hidden')
-                        .style('background', '#228B22')
+                        .style('background', '#84A59D')
                         .text('a simple tool tip')
                         .style('color', 'white')
                         .style('height', '30px')
