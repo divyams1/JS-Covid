@@ -653,7 +653,8 @@ export const chart = (stateName) => {
 }
   const fullStateName = abbr[stateName];
   const makeChart = ( metric, data ) => {
-      
+
+
       const stateData = metric === 'Risk Factors' ? ( [data[4], data[5], data[6] ] ) : ( [  data[1], data[2], data[3]])
       const margin = { top: 20, right: 0, bottom: 30, left: 40};
       const height = 500;
