@@ -112,7 +112,7 @@ const map = () => {
                         .style('text-align', 'center')
                         .style('border', '1px solid black')
                         .attr('id', 'tooltip-map')
-                        .style('border-radius', '5px')
+                        .style('border-radius', '10px')
             d3.select('body')
                     .selectAll('.state-path')
                     .append('div')

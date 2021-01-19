@@ -656,7 +656,7 @@ export const chart = (stateName) => {
 
 
       const stateData = metric === 'Risk Factors' ? ( [data[4], data[5], data[6] ] ) : ( [  data[1], data[2], data[3]])
-      const margin = { top: 20, right: 0, bottom: 30, left: 40};
+      const margin = { top: 20, right: 0, bottom: 30, left: 50};
       const height = 500;
       const width = 500;
       const xRange = [ margin.left, width - margin.right];
@@ -694,9 +694,9 @@ export const chart = (stateName) => {
        .attr("transform", `translate(0,${height - margin.bottom})`)
       .call(d3.axisBottom(x));
 
-     svg.append("g")
-       .attr("transform", `translate(${margin.left},0)`)
-      .call(d3.axisLeft(y));
+    //  svg.append("g")
+    //    .attr("transform", `translate(${margin.left},0)`)
+    //   .call(d3.axisLeft(y));
 
     const yAxis = g => g  
        .attr("transform", `translate(${margin.left},0)`)
