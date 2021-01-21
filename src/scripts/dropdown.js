@@ -19,7 +19,9 @@ export const dropdownHeatMap = (data) => {
 
      let heatKeys = [];
      const allKeys = Object.keys(states[0])
-     
+      const numberWithCommas = (x) =>  {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+     }
      heatKeys = [ ['positive', 'Positive'], ['negative', 'Negative'], ['hospitalizedCurrently' , 'Hospitalized Currently'] , ['hospitalizedCumulative', 'Cumulative Hospitalizations'] , ['death' , 'Deaths'] ]
 
     d3.select("#select-heat")
@@ -31,7 +33,7 @@ export const dropdownHeatMap = (data) => {
                             .attr("value", (d) => { return d[0]})
     d3.select("#select-heat").on("change", d => {
                             const metric = d.target.value;
-                            const newData = states.map( state => {
+                            let newData = states.map( state => {
                                 
                                 return ( [state["state"], state[d.target.value] ])
                             })
@@ -46,21 +48,26 @@ export const dropdownHeatMap = (data) => {
                                 .style('visibility', 'hidden')
                                 .style('background', '#4FC2B4')
                                 .text('a simple tool tip')
-                                .style('color', 'D6D6D6')
-                                .style('height', '50px')
+                                .style('color', ' #F7EDE2')
+                                .style('height', '30px')
                                 .style('border', '1px solid black')
                                 .attr('id', 'tooltip-map')
-                                .style('width', '400px')
+                                .style('width', '200px')
+                                .style('text-align', 'center')
+                                .style('border-radius', '10px')
                             const newColor = d3.scaleLinear()
                                     .range(["#F08080", "#8B0000"])
                                     .domain([0, Math.max(...colorData)])
                            
-                            
+                            newData = newData.map( data => {
+                                const commaNum = ( typeof(data[1]) === 'number'? numberWithCommas(data[1]) : data[1] ) 
+                                return [data[0], data[1], commaNum]
+                            })
                             newData.map ( state => {
                                 
                                 const stateId = state[0]
                                 d3.select(`#${stateId}`)
-                                      .on('mouseover', (d) =>  { tooltip.text( `${state[0]}:  ${state[1]} ${metric}` )
+                                      .on('mouseover', (d) =>  { tooltip.text( `${state[0]}:  ${state[2]} ${metric}` )
                                         tooltip.style('visibility', 'visible')}).style('text-align', 'center')
                                     .on('mousemove', (e) => { 
                                         return tooltip.style('top', (e.pageY  -10)+'px').style('left', (e.pageX+10)+'px')})
@@ -77,12 +84,12 @@ export const dropdownHeatMap = (data) => {
             const legendLabel = labels[d.target.value]; 
             d3.select('#legend-label')
                         .text(`${legendLabel}`)
-
+            const leftNum = numberWithCommas(Math.min(...colorData))
             d3.select('#legend')
                     .append('div')
                     .attr('id', 'heat-legend')
             d3.select('#left-number')
-                .text(`${Math.min(...colorData)}`)
+                .text(`${leftNum}`)
 
 
               d3.select('#heat-legend')
@@ -122,9 +129,9 @@ export const dropdownHeatMap = (data) => {
             .style('height', '20px')
             .style('background-color', '#8B0000')
 
-            
+            const rightNum = numberWithCommas( Math.max(...colorData))
             d3.select('#right-number')
-                .text(`${Math.max(...colorData)}`)
+                .text(`${rightNum}`)
 
 
                         })

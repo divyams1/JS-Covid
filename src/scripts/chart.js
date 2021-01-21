@@ -657,8 +657,8 @@ export const chart = (stateName) => {
 
       const stateData = metric === 'Risk Factors' ? ( [data[4], data[5], data[6] ] ) : ( [  data[1], data[2], data[3]])
       const margin = { top: 20, right: 0, bottom: 30, left: 50};
-      const height = 500;
-      const width = 500;
+      const height = 300;
+      const width = 300;
       const xRange = [ margin.left, width - margin.right];
       const yRange = [height- margin.bottom, margin.top];
       
@@ -806,6 +806,10 @@ d3.select('#state-dropdown')
     .style('color', 'D6D6D6')
     .style('padding-left', '5px')
     .style('padding-right', '5px')
+
+  function numberWithCommas(x) {
+   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+   }
  const row = table.append('tbody');
  row 
     .selectAll('tr')
@@ -816,8 +820,9 @@ const cells = row.selectAll('td')
         .data(raceData)
         .enter()
         .append('td')
-        .text( d => { return d[1]})
+        .text( d => { return numberWithCommas(d[1])})
         .style('border', '1px solid black')
+  
 
  const riskTable = d3.select('#state-holder').append('table').attr('id', 'risk-data-table')
   const riskHeader = riskTable.append('thead').append('tr');
@@ -843,7 +848,7 @@ const riskCells = riskRow.selectAll('td')
         .data(riskData)
         .enter()
         .append('td')
-        .text( d => { return d[1]})
+        .text( d => { return numberWithCommas(d[1])})
         .style('border', '1px solid black')
 
 

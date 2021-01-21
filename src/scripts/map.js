@@ -45,10 +45,12 @@ const map = () => {
                 .text(`Positives`)
                 .style('margin', '0')
                 .attr('id', 'legend-label')
+            
+            const leftNum = numberWithCommas(Math.min(...colorData))
 
             d3.select('#legend')
                 .append('p')
-                .text(`${Math.min(...colorData)}`)
+                .text(`${leftNum}`)
                 .attr('id', 'left-number')
 
    
@@ -90,10 +92,10 @@ const map = () => {
             .style('height', '20px')
             .style('background-color', '#8B0000')
 
-            
+            const rightNum = numberWithCommas( Math.max(...colorData))
             d3.select('#legend')
                 .append('p')
-                .text(`${Math.max(...colorData)}`)
+                .text(`${rightNum}`)
                 .attr('id', 'right-number')
              
               const map = d3.select("#map")
@@ -106,7 +108,7 @@ const map = () => {
                         .style('visibility', 'hidden')
                         .style('background', '#1B998B')
                         .text('a simple tool tip')
-                        .style('color', '#D6D6D6')
+                        .style('color', '#F7EDE2')
                         .style('height', '30px')
                         .style('width', '200px')
                         .style('text-align', 'center')
@@ -117,12 +119,16 @@ const map = () => {
                     .selectAll('.state-path')
                     .append('div')
 
-            
-
+            function numberWithCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            }
+            data = data.map( data => {
+                return [data[0], data[1] , numberWithCommas(data[1])]
+            })
             data.map( state => {
                 const stateId = state[0]
                 d3.select(`#${stateId}`)
-                    .on('mouseover', (d) =>  { tooltip.text( `${state[0]}:  ${state[1]} Positives` )
+                    .on('mouseover', (d) =>  { tooltip.text( `${state[0]}:  ${(state[2])} Positives` )
                          tooltip.style('visibility', 'visible')})
                     .on('mousemove', (e) => { 
                         return tooltip.style('top', (e.pageY  -10)+'px').style('left', (e.pageX+10)+'px')})
