@@ -23,7 +23,7 @@ export const dropdownHeatMap = (data) => {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
      }
      heatKeys = [ ['positive', 'Positive'], ['negative', 'Negative'], ['hospitalizedCurrently' , 'Hospitalized Currently'] , ['hospitalizedCumulative', 'Cumulative Hospitalizations'] , ['death' , 'Deaths'] ]
-
+     const labelsFirst = { 'positive': 'Positive', 'negative': 'Negative', 'hospitalizedCurrently' : 'Hospitalized Currently' , 'hospitalizedCumulative': 'Total Hospitalizations' , 'death' : 'Deaths'} 
     d3.select("#select-heat")
                             .selectAll('myOptions')
                             .data(heatKeys)
@@ -32,7 +32,7 @@ export const dropdownHeatMap = (data) => {
                             .text( (d) => { return d[1] } )
                             .attr("value", (d) => { return d[0]})
     d3.select("#select-heat").on("change", d => {
-                            const metric = d.target.value;
+                            const metric = labelsFirst[d.target.value];
                             let newData = states.map( state => {
                                 
                                 return ( [state["state"], state[d.target.value] ])
@@ -52,7 +52,7 @@ export const dropdownHeatMap = (data) => {
                                 .style('height', '30px')
                                 .style('border', '1px solid black')
                                 .attr('id', 'tooltip-map')
-                                .style('width', '200px')
+                                .style('width', '250px')
                                 .style('text-align', 'center')
                                 .style('border-radius', '10px')
                             const newColor = d3.scaleLinear()
