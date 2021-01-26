@@ -15,8 +15,8 @@
 
 ## Link to Live Site: 
 
-## Development Insights: 
-   # One of the most challenging pieces of the project was creating a tooltip that would display a specific state's information when a user would hover over the specific state on the map. One considered method was giving each state item on the map a container that would be hidden by default and would appear on hover; however, this would require creating an extra 51 containers that would need to be refreshed when a new metric was displayed on the map. To get around this, I created a single container that was hidden by default and would have its top and left property change depending on the location of the mouse so that the tooltip would appear on near location where the mouse hovered. Using the ID's of the the states on the map allowed me to fetch the state's data and render it appropriately using only one container. 
+## Key Features
+   In order to make an interactive tooltip for the map. An initial div was created that was not visible and as a user hovered over a specific state on the map, the div would appear near the mouse position, and would have the visbility applied. The map element also contained the state ID and was used in order to find the specific data for the state so that the correct data is displayed and only one div is used rather than having each state contain its own div for the tooltip.
 ```JavaScript
   const tooltip = d3.select('body')
                         .append('div')
@@ -40,5 +40,36 @@
                     .on('mousemove', (e) => { 
                         return tooltip.style('top', (e.pageY  -10)+'px').style('left', (e.pageX+10)+'px')})
 ```
-   #
+   In addition to the hover effects on the map, the metrics are able to be changed via dropdown. The dropdown has an on change listener which will capture the new value, and parse the COVID data. A new legend and color scale will be made based on the new data and the D3 function. The map is rendered and each state is given the appropriate color based off the value the metric has.
+   
+   ```JavaScript 
+     d3.select("#select-heat").on("change", d => {
+                            const metric = labelsFirst[d.target.value];
+                            let newData = states.map( state => {
+                                
+                                return ( [state["state"], state[d.target.value] ])
+                            })
+                           const colorData = newData.map( state => {
+                               return state[1]
+                           })
+     const newColor = d3.scaleLinear()
+                                    .range(["#F08080", "#8B0000"])
+                                    .domain([0, Math.max(...colorData)])
+       newData.map ( state => {
+                                
+                                const stateId = state[0]
+                                d3.select(`#${stateId}`)
+                                      .on('mouseover', (d) =>  { tooltip.text( `${state[0]}:  ${state[2]} ${metric}` )
+                                        tooltip.style('visibility', 'visible')}).style('text-align', 'center')
+                                    .on('mousemove', (e) => { 
+                                        return tooltip.style('top', (e.pageY  -10)+'px').style('left', (e.pageX+10)+'px')})
+                                    .on('mouseout', () => {return tooltip.style('visibility', 'hidden') })
+                                    .on('click' , (e) => {
+                                        const stateName= e.currentTarget.id 
+                                        chart(stateName)
+                            })
+                                    .style('fill', function(d) { return newColor(state[1])})
+                            })
+   
+   ```
     
