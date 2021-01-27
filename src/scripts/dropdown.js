@@ -75,7 +75,6 @@ export const dropdownHeatMap = (data) => {
                                     .on('click' , (e) => {
                                         const stateName= e.currentTarget.id 
                                         chart(stateName)
-                                        // timeDropdown(stateName)
                     })
                                     .style('fill', function(d) { return newColor(state[1])})
                             })
