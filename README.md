@@ -14,6 +14,7 @@
     * View a states specific data around poverty risk factors such as race, or insurance coverage, or age.
 
 ## Link to Live Site: 
+JS-COVID: ![alt-text](https://divyams1.github.io/JS-Covid/)
 
 ## Key Features
 ![alt-text](https://im3.ezgif.com/tmp/ezgif-3-39a05fc451d0.gif)
