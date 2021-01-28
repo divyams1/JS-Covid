@@ -41,7 +41,7 @@ const map = () => {
                          .range(["#F08080", "#8B0000"])
                         .domain([Math.min(...colorData), Math.max(...colorData)])
              d3.select('#legend-cont')
-                .append('h2')
+                .append('h4')
                 .text(`Positives`)
                 .style('margin', '0')
                 .attr('id', 'legend-label')

@@ -658,7 +658,7 @@ export const chart = (stateName) => {
       const stateData = metric === 'Risk Factors' ? ( [data[4], data[5], data[6] ] ) : ( [  data[1], data[2], data[3]])
       const margin = { top: 20, right: 0, bottom: 30, left: 50};
       const height = 300;
-      const width = 300;
+      const width = 350;
       const xRange = [ margin.left, width - margin.right];
       const yRange = [height- margin.bottom, margin.top];
       
