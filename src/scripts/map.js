@@ -10,9 +10,9 @@ const map = () => {
     
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function(abbr, pop) {
-     
+        
         if (this.readyState == 4 && this.status == 200) {
-           
+      
              
              const stateInfo = Object.values( JSON.parse(this.response) ) 
              
@@ -140,22 +140,13 @@ const map = () => {
                     })
                     .style('fill', function(d) { return myColor(state[1])})
             })
-            d3.selectAll('title')
-                .text('')
-           
-         
-
-            
-
-            
-           
-          
-
+            // d3.selectAll('title')
+            //     .text('')
     }
 }
    xhttp.open("GET", ' https://api.covidtracking.com/v1/states/current.json', true);
    xhttp.send();
-    
+       
 
 }
 export default map;
