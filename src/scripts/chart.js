@@ -653,7 +653,67 @@ export const chart = (stateName) => {
 }
   const fullStateName = abbr[stateName];
   const makeChart = ( metric, data ) => {
-
+           const abbr = {
+    "AL": "Alabama",
+    "AK": "Alaska",
+    "AS": "American Samoa",
+    "AZ": "Arizona",
+    "AR": "Arkansas",
+    "CA": "California",
+    "CO": "Colorado",
+    "CT": "Connecticut",
+    "DE": "Delaware",
+    "DC": "District Of Columbia",
+    "FM": "Federated States Of Micronesia",
+    "FL": "Florida",
+    "GA": "Georgia",
+    "GU": "Guam",
+    "HI": "Hawaii",
+    "ID": "Idaho",
+    "IL": "Illinois",
+    "IN": "Indiana",
+    "IA": "Iowa",
+    "KS": "Kansas",
+    "KY": "Kentucky",
+    "LA": "Louisiana",
+    "ME": "Maine",
+    "MH": "Marshall Islands",
+    "MD": "Maryland",
+    "MA": "Massachusetts",
+    "MI": "Michigan",
+    "MN": "Minnesota",
+    "MS": "Mississippi",
+    "MO": "Missouri",
+    "MT": "Montana",
+    "NE": "Nebraska",
+    "NV": "Nevada",
+    "NH": "New Hampshire",
+    "NJ": "New Jersey",
+    "NM": "New Mexico",
+    "NY": "New York",
+    "NC": "North Carolina",
+    "ND": "North Dakota",
+    "MP": "Northern Mariana Islands",
+    "OH": "Ohio",
+    "OK": "Oklahoma",
+    "OR": "Oregon",
+    "PW": "Palau",
+    "PA": "Pennsylvania",
+    "PR": "Puerto Rico",
+    "RI": "Rhode Island",
+    "SC": "South Carolina",
+    "SD": "South Dakota",
+    "TN": "Tennessee",
+    "TX": "Texas",
+    "UT": "Utah",
+    "VT": "Vermont",
+    "VI": "Virgin Islands",
+    "VA": "Virginia",
+    "WA": "Washington",
+    "WV": "West Virginia",
+    "WI": "Wisconsin",
+    "WY": "Wyoming"
+}
 
       const stateData = metric === 'Risk Factors' ? ( [data[4], data[5], data[6] ] ) : ( [  data[1], data[2], data[3]])
       const margin = { top: 20, right: 0, bottom: 30, left: 50};
@@ -708,7 +768,7 @@ export const chart = (stateName) => {
       .attr("transform", `translate(0,${height - margin.bottom})`)
      .call(d3.axisBottom(x).tickSizeOuter(0))
        svg.append("g")
-      .attr("fill", "#FFA69E")
+      .attr("fill", "#7e8284")
       .selectAll("rect")
       .data(stateData)
       .join("rect")
@@ -756,9 +816,10 @@ d3.select('#state-dropdown').remove();
     d3.select('#risk-data-table').remove()
     d3.select('#data-dropdown-div')
              .append('h1')
-             .text(stateName )
+             .text(abbr[stateName] )
              .attr('id', 'data')
              .style('text-align', 'center')
+             .style('color', '#0d2f4f')
     d3.select('#data-dropdown-div')
         .append('div')
         .style('display' , 'flex')
@@ -800,10 +861,10 @@ d3.select('#state-dropdown')
     .enter()
     .append('th')
     .text( d => { return d[0]})
-    .style('background-color', '#FF7E6B')
+    .style('background-color', '#0d2f4f')
     .style('margin', '0')
     .style('padding', '0')
-    .style('color', 'D6D6D6')
+    .style('color', ' #F7EDE2')
     .style('padding-left', '5px')
     .style('padding-right', '5px')
 
@@ -832,10 +893,10 @@ const cells = row.selectAll('td')
     .enter()
     .append('th')
     .text( d => { return d[0]})
-    .style('background-color', '#FF7E6B')
+    .style('background-color', '#0d2f4f')
     .style('margin', '0')
     .style('padding', '0')
-    .style('color', 'D6D6D6')
+    .style('color', ' #F7EDE2')
     .style('padding-left', '5px')
     .style('padding-right', '5px')
  const riskRow = riskTable.append('tbody');

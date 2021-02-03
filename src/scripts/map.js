@@ -10,9 +10,9 @@ const map = () => {
     
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function(abbr, pop) {
-     
+        
         if (this.readyState == 4 && this.status == 200) {
-           
+      
              
              const stateInfo = Object.values( JSON.parse(this.response) ) 
              
@@ -38,7 +38,7 @@ const map = () => {
             stateDropdown(data);
             
              const myColor = d3.scaleLinear()
-                         .range(["#F08080", "#8B0000"])
+                         .range(["#F4A4AB", "#B61624"])
                         .domain([Math.min(...colorData), Math.max(...colorData)])
              d3.select('#legend-cont')
                 .append('h4')
@@ -59,38 +59,38 @@ const map = () => {
             .append('rect')
             .style('width', '20px')
             .style('height', '20px')
-            .style('background-color', '#F08080')
+            .style('background-color', '#F4A4AB')
 
              d3.select('#legend')
             .append('rect')
             .style('width', '20px')
             .style('height', '20px')
-            .style('background-color', '#db6868')
+            .style('background-color', '#EF8089')
 
             d3.select('#legend')
             .append('rect')
             .style('width', '20px')
             .style('height', '20px')
-            .style('background-color', '#c95151')
+            .style('background-color', '#EB5C68')
 
             d3.select('#legend')
             .append('rect')
             .style('width', '20px')
             .style('height', '20px')
-            .style('background-color', '#b43636')
+            .style('background-color', '#E63746')
 
              d3.select('#legend')
             .append('rect')
             .style('width', '20px')
             .style('height', '20px')
-            .style('background-color', '#a52222')
+            .style('background-color', '#DA1B2B')
 
 
                d3.select('#legend')
             .append('rect')
             .style('width', '20px')
             .style('height', '20px')
-            .style('background-color', '#8B0000')
+            .style('background-color', '#B61624')
 
             const rightNum = numberWithCommas( Math.max(...colorData))
             d3.select('#legend')
@@ -106,9 +106,9 @@ const map = () => {
                         .style('position' ,'absolute')
                         .style('z-index', 10)
                         .style('visibility', 'hidden')
-                        .style('background', '#1B998B')
+                        .style('background', ' #0d2f4f')
                         .text('a simple tool tip')
-                        .style('color', '#F7EDE2')
+                        .style('color', '#e3e7eb')
                         .style('height', '30px')
                         .style('width', '200px')
                         .style('text-align', 'center')
@@ -140,22 +140,13 @@ const map = () => {
                     })
                     .style('fill', function(d) { return myColor(state[1])})
             })
-            d3.selectAll('title')
-                .text('')
-           
-         
-
-            
-
-            
-           
-          
-
+            // d3.selectAll('title')
+            //     .text('')
     }
 }
    xhttp.open("GET", ' https://api.covidtracking.com/v1/states/current.json', true);
    xhttp.send();
-    
+       
 
 }
 export default map;
